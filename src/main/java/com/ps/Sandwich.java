@@ -52,7 +52,7 @@ public class Sandwich implements Total{
         meatOptions.add("Roast Beef");
         meatOptions.add("Chicken");
         meatOptions.add("Bacon");
-        return populatingMeats();
+        return meatOptions;
     }
     public static void printMeats(){
         List<String> meatOptions = Sandwich.populatingMeats();
