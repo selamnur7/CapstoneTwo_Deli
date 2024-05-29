@@ -17,6 +17,19 @@ public class Sandwich implements Total{
     private float price;
 
     public ArrayList<Sandwich> sandwiches = new ArrayList<>();
+    public static List<String> populatingSize() {
+        ArrayList<String> sizeOptions = new ArrayList<>();
+        sizeOptions.add("Small");
+        sizeOptions.add("Medium");
+        sizeOptions.add("Large");
+        return sizeOptions;
+    }
+    public static void printSize(){
+        List<String> sizeOptions = Sandwich.populatingSize();
+        for (String size : sizeOptions) {
+            System.out.println(size);
+        }
+    }
     public static List<String> populatingBreads() {
         ArrayList<String> breadOptions = new ArrayList<>();
         breadOptions.add("White");
@@ -24,6 +37,12 @@ public class Sandwich implements Total{
         breadOptions.add("Rye");
         breadOptions.add("Wrap");
         return breadOptions;
+    }
+    public static void printBreads(){
+        List<String> breadOptions = Sandwich.populatingBreads();
+        for (String bread : breadOptions) {
+            System.out.println(bread);
+        }
     }
     public static List<String> populatingMeats() {
         ArrayList<String> meatOptions = new ArrayList<>();
@@ -35,6 +54,12 @@ public class Sandwich implements Total{
         meatOptions.add("Bacon");
         return populatingMeats();
     }
+    public static void printMeats(){
+        List<String> meatOptions = Sandwich.populatingMeats();
+        for (String meat : meatOptions) {
+            System.out.println(meat);
+        }
+    }
     public static List<String> populatingCheeses() {
         ArrayList<String> cheeseOptions = new ArrayList<>();
         cheeseOptions.add("American");
@@ -42,6 +67,12 @@ public class Sandwich implements Total{
         cheeseOptions.add("Cheddar");
         cheeseOptions.add("Swiss");
         return cheeseOptions;
+    }
+    public static void printCheeses(){
+        List<String> cheeseOptions = Sandwich.populatingCheeses();
+        for (String cheese : cheeseOptions) {
+            System.out.println(cheese);
+        }
     }
     public static List<String> populatingToppings() {
         ArrayList<String> toppingOptions = new ArrayList<>();
@@ -56,6 +87,12 @@ public class Sandwich implements Total{
         toppingOptions.add("Mushrooms");
         return toppingOptions;
     }
+    public static void printToppings(){
+        List<String> toppingOptions = Sandwich.populatingToppings();
+        for (String topping : toppingOptions) {
+            System.out.println(topping);
+        }
+    }
     public static List<String> populatingSauces() {
         ArrayList<String> sauceOptions = new ArrayList<>();
         sauceOptions.add("Mayo");
@@ -66,11 +103,23 @@ public class Sandwich implements Total{
         sauceOptions.add("Vinaigrette");
         return sauceOptions;
     }
+    public static void printSauces(){
+        List<String> sauceOptions = Sandwich.populatingSauces();
+        for (String sauce : sauceOptions) {
+            System.out.println(sauce);
+        }
+    }
     public static List<String> populatingSides() {
         ArrayList<String> sidesOptions = new ArrayList<>();
         sidesOptions.add("Au jus");
         sidesOptions.add("Sauce");
         return sidesOptions;
+    }
+    public static void printSides(){
+        List<String> sideOptions = Sandwich.populatingSides();
+        for (String side : sideOptions) {
+            System.out.println(side);
+        }
     }
 
 
