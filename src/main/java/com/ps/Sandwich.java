@@ -11,18 +11,25 @@ public class Sandwich implements Total{
     private String cheese;
     private boolean extraCheese;
     private boolean toasted;
-    private String toppings;
+    private ArrayList toppings;
     private String sauces;
     private String sides;
     private float price;
 
-    public ArrayList<Sandwich> sandwiches = new ArrayList<>();
+    public static ArrayList<Sandwich> sandwiches = new ArrayList<>();
     public static List<String> populatingSize() {
         ArrayList<String> sizeOptions = new ArrayList<>();
-        sizeOptions.add("Small");
-        sizeOptions.add("Medium");
-        sizeOptions.add("Large");
+        sizeOptions.add("4 inch");
+        sizeOptions.add("8 inch");
+        sizeOptions.add("12 inch");
         return sizeOptions;
+    }
+    public static List<Float> populatingSizePrices() {
+        ArrayList<Float> sizePrices = new ArrayList<>();
+        sizePrices.add(5.50f);
+        sizePrices.add(7.00f);
+        sizePrices.add(8.50f);
+        return sizePrices;
     }
     public static void printSize(){
         List<String> sizeOptions = Sandwich.populatingSize();
@@ -38,6 +45,7 @@ public class Sandwich implements Total{
         breadOptions.add("Wrap");
         return breadOptions;
     }
+
     public static void printBreads(){
         List<String> breadOptions = Sandwich.populatingBreads();
         for (String bread : breadOptions) {
@@ -52,7 +60,15 @@ public class Sandwich implements Total{
         meatOptions.add("Roast Beef");
         meatOptions.add("Chicken");
         meatOptions.add("Bacon");
+        meatOptions.add("NO meat");
         return meatOptions;
+    }
+    public static List<Float> populatingMeatPrices() {
+        ArrayList<Float> meatPrices = new ArrayList<>();
+        meatPrices.add(1.00f);
+        meatPrices.add(2.00f);
+        meatPrices.add(3.00f);
+        return meatPrices;
     }
     public static void printMeats(){
         List<String> meatOptions = Sandwich.populatingMeats();
@@ -60,13 +76,28 @@ public class Sandwich implements Total{
             System.out.println(meat);
         }
     }
+    public static List<Float> populatingExtraMeatPrices() {
+        ArrayList<Float> extraMeatPrices = new ArrayList<>();
+        extraMeatPrices.add(0.50f);
+        extraMeatPrices.add(1.00f);
+        extraMeatPrices.add(1.50f);
+        return extraMeatPrices;
+    }
     public static List<String> populatingCheeses() {
         ArrayList<String> cheeseOptions = new ArrayList<>();
         cheeseOptions.add("American");
         cheeseOptions.add("Provolone");
         cheeseOptions.add("Cheddar");
         cheeseOptions.add("Swiss");
+        cheeseOptions.add("NO cheese");
         return cheeseOptions;
+    }
+    public static List<Float> populatingCheesePrices() {
+        ArrayList<Float> cheesePrices = new ArrayList<>();
+        cheesePrices.add(0.75f);
+        cheesePrices.add(1.50f);
+        cheesePrices.add(2.25f);
+        return cheesePrices;
     }
     public static void printCheeses(){
         List<String> cheeseOptions = Sandwich.populatingCheeses();
@@ -74,6 +105,14 @@ public class Sandwich implements Total{
             System.out.println(cheese);
         }
     }
+    public static List<Float> populatingExtraCheesePrices() {
+        ArrayList<Float> extraCheesePrices = new ArrayList<>();
+        extraCheesePrices.add(0.30f);
+        extraCheesePrices.add(0.60f);
+        extraCheesePrices.add(0.90f);
+        return extraCheesePrices;
+    }
+
     public static List<String> populatingToppings() {
         ArrayList<String> toppingOptions = new ArrayList<>();
         toppingOptions.add("Lettuce");
@@ -85,6 +124,7 @@ public class Sandwich implements Total{
         toppingOptions.add("Pickles");
         toppingOptions.add("Guacamole");
         toppingOptions.add("Mushrooms");
+        toppingOptions.add("NO toppings");
         return toppingOptions;
     }
     public static void printToppings(){
@@ -101,6 +141,7 @@ public class Sandwich implements Total{
         sauceOptions.add("Ranch");
         sauceOptions.add("Thousand Islands");
         sauceOptions.add("Vinaigrette");
+        sauceOptions.add("NO sauces");
         return sauceOptions;
     }
     public static void printSauces(){
@@ -113,6 +154,7 @@ public class Sandwich implements Total{
         ArrayList<String> sidesOptions = new ArrayList<>();
         sidesOptions.add("Au jus");
         sidesOptions.add("Sauce");
+        sidesOptions.add("NO sides");
         return sidesOptions;
     }
     public static void printSides(){
@@ -123,7 +165,7 @@ public class Sandwich implements Total{
     }
 
 
-    public Sandwich(String size, String bread, String meats, boolean extraMeat, String cheese, boolean extraCheese, boolean toasted, String toppings, String sauces, String sides, float price, ArrayList<Sandwich> sandwiches) {
+    public Sandwich(String size, String bread, String meats, boolean extraMeat, String cheese, boolean extraCheese, boolean toasted, ArrayList toppings, String sauces, String sides, float price) {
         this.size = size;
         this.bread = bread;
         this.meats = meats;
@@ -135,7 +177,6 @@ public class Sandwich implements Total{
         this.sauces = sauces;
         this.sides = sides;
         this.price = price;
-        this.sandwiches = sandwiches;
     }
 
     public String getSize() {
@@ -194,11 +235,11 @@ public class Sandwich implements Total{
         this.toasted = toasted;
     }
 
-    public String getToppings() {
+    public ArrayList getToppings() {
         return toppings;
     }
 
-    public void setToppings(String toppings) {
+    public void setToppings(ArrayList toppings) {
         this.toppings = toppings;
     }
 
@@ -235,7 +276,52 @@ public class Sandwich implements Total{
     }
 
     @Override
+    public String toString() {
+        return "Sandwich{" +
+                "size='" + size + '\'' +
+                ", bread='" + bread + '\'' +
+                ", meats='" + meats + '\'' +
+                ", extraMeat=" + extraMeat +
+                ", cheese='" + cheese + '\'' +
+                ", extraCheese=" + extraCheese +
+                ", toasted=" + toasted +
+                ", toppings=" + toppings +
+                ", sauces='" + sauces + '\'' +
+                ", sides='" + sides + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
+    @Override
     public float getTotal() {
-            return this.getPrice();
+        float basePrice = price;
+        basePrice = 0.00f;
+        switch (this.size.toLowerCase()) {
+            case "4 inch":
+                basePrice = 5.50f;
+                break;
+            case "8 inch":
+                basePrice = 7.00f;
+                break;
+            case "12 inch":
+                basePrice = 8.50f;
+                break;
+
+
+        }
+        if (!this.meats.equalsIgnoreCase("NO meats")){
+            basePrice += 1.00f;
+            if (this.extraMeat){
+                basePrice += 1.50f;
+            }
+        }
+        if (!this.meats.equalsIgnoreCase("NO cheese")){
+            basePrice += 0.75f;
+            if (this.extraMeat){
+                basePrice += 1.05f;
+            }
+        }
+
+        return basePrice;
     }
 }
