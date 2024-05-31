@@ -77,6 +77,21 @@ public class Drink implements Total{
 
     @Override
     public float getTotal() {
-        return this.getPrice();
+        float basePrice = price;
+        basePrice = 0.00f;
+        switch (this.drinkSize.toLowerCase()) {
+            case "small":
+                basePrice = 2.00f;
+                break;
+            case "medium":
+                basePrice = 2.50f;
+                break;
+            case "large":
+                basePrice = 3.00f;
+                break;
+
+
+        }
+        return basePrice;
     }
 }

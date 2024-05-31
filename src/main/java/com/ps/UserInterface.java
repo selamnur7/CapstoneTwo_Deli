@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.ps.Sandwich.sandwiches;
+
 public class UserInterface {
     private static Scanner scanner = new Scanner(System.in);
 
@@ -28,12 +30,25 @@ public class UserInterface {
                     processOrderChip();
                     break;
                 case 4:
+                    processCheckout();
                     break;
                 case 5:
                     break;
 
             }
         } while (mainMenuCommand != 5);
+    }
+    public void processCheckout(){
+
+        System.out.println("Here is your current order of sandwiches");
+        for (Sandwich orderSandwich: sandwiches) {
+        Order order = new Order(orderSandwich, orderSandwich.getPrice());
+            System.out.printf("\"Size:%-7s       Bread:%-7s       Meat:%-7s       Extra Meat:%-7b       Cheese:%-7s" +
+                    "       Extra Cheese:%-7b       Toasted:%-7b       Toppings:%-7s       Sauces:%-7s       Sides:%-7s       Price:$%.2f\n",
+                    orderSandwich.getSize(), orderSandwich.getBread(), orderSandwich.getMeats(), orderSandwich.isExtraMeat(),
+                    orderSandwich.getCheese(), orderSandwich.isExtraCheese(), orderSandwich.isToasted(), String.join(", ", orderSandwich.getToppings()),
+                    orderSandwich.getSauces(), orderSandwich.getSides(), orderSandwich.getPrice());
+        }
     }
     public void processMakeSandwich(){
         String size = chooseSize();
@@ -62,8 +77,7 @@ public class UserInterface {
         float price = sandwich.getTotal();
         sandwich.setPrice(price);
 
-
-        Sandwich.sandwiches.add(sandwich);
+        sandwiches.add(sandwich);
         sandwich.getTotal();
         System.out.println("Sandwich ordered: " + sandwich);
         System.out.println("Price: " + sandwich.getTotal());
@@ -164,6 +178,7 @@ public class UserInterface {
         }
         return extraMeat;
     }
+
     public static String chooseCheese(){
         boolean validCheese = false;
         String customerCheese = "";
@@ -231,7 +246,7 @@ public class UserInterface {
         }
         return toasted;
     }
-    public static ArrayList<String> chooseToppings(){
+    public static ArrayList<String> chooseToppings() {
         ArrayList<String> selectedToppings = new ArrayList<>();
         boolean addMoreToppings = true;
 
@@ -239,22 +254,23 @@ public class UserInterface {
         List<String> deliTopping = Sandwich.populatingToppings();
 
         while (addMoreToppings) {
+
             System.out.println("Which topping would you like?");
-            String customerTopping = scanner.nextLine();
+            String customerTopping = scanner.nextLine().trim();  // Trim whitespace
 
             if (deliTopping.contains(customerTopping)) {
                 if (!selectedToppings.contains(customerTopping)) {
                     selectedToppings.add(customerTopping);
                     System.out.println(customerTopping + " added!");
                 } else {
-                    System.out.println("You already selected " + customerTopping + ".");
+                    System.out.println("You already selected " + customerTopping);
                 }
             } else {
                 System.out.println("Please choose one of our toppings");
             }
 
             System.out.println("Would you like to add another topping? (Y/N)");
-            String moreToppings = scanner.nextLine();
+            String moreToppings = scanner.nextLine().trim();  // Trim whitespace and handle case
             if (!moreToppings.equalsIgnoreCase("Y")) {
                 addMoreToppings = false;
             }

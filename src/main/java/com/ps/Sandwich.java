@@ -315,9 +315,9 @@ public class Sandwich implements Total{
                 basePrice += 1.50f;
             }
         }
-        if (!this.meats.equalsIgnoreCase("NO cheese")){
+        if (!this.cheese.equalsIgnoreCase("NO cheese")){
             basePrice += 0.75f;
-            if (this.extraMeat){
+            if (this.extraCheese){
                 basePrice += 1.05f;
             }
         }
