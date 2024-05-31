@@ -12,7 +12,7 @@ import static com.ps.Sandwich.sandwiches;
 public class UserInterface {
     private static Scanner scanner = new Scanner(System.in);
 
-    public void display(){
+    public void display() {
         int mainMenuCommand;
         System.out.println("Welcome to Selam's Super Sandwiches!");
         do {
@@ -22,7 +22,7 @@ public class UserInterface {
             mainMenuCommand = scanner.nextInt();
             scanner.nextLine();
 
-            switch (mainMenuCommand){
+            switch (mainMenuCommand) {
                 case 1:
                     processMakeSandwich();
                     break;
@@ -44,22 +44,23 @@ public class UserInterface {
             }
         } while (mainMenuCommand != 0);
     }
-    public void processCheckout(){
+
+    public void processCheckout() {
         float totalPrice = 0.00f;
 
         System.out.println("Here is your current order(s) of sandwiches");
-        for (Sandwich orderSandwich: sandwiches) {
+        for (Sandwich orderSandwich : sandwiches) {
             totalPrice += orderSandwich.getPrice();
-        Order order = new Order(orderSandwich, orderSandwich.getPrice());
+            Order order = new Order(orderSandwich, orderSandwich.getPrice());
             System.out.printf("\"Size:%-3s       Bread:%-3s       Meat:%-3s       Extra Meat:%-3b       Cheese:%-3s" +
-                    "       Extra Cheese:%-3b       Toasted:%-3b       Toppings:%-3s       Sauces:%-3s       Sides:%-3s       Price:$%.2f\n",
+                            "       Extra Cheese:%-3b       Toasted:%-3b       Toppings:%-3s       Sauces:%-3s       Sides:%-3s       Price:$%.2f\n",
                     orderSandwich.getSize(), orderSandwich.getBread(), orderSandwich.getMeats(), orderSandwich.isExtraMeat(),
                     orderSandwich.getCheese(), orderSandwich.isExtraCheese(), orderSandwich.isToasted(), String.join(", ", orderSandwich.getToppings()),
                     orderSandwich.getSauces(), orderSandwich.getSides(), orderSandwich.getPrice());
         }
 
         System.out.println("Here is your current order(s) of Drinks");
-        for (Drink drink: drinkOrders) {
+        for (Drink drink : drinkOrders) {
             totalPrice += drink.getPrice();
             Order order = new Order(drink, drink.getPrice());
             System.out.printf("\"Drink Size:%-3s       Drink:%-3s       Price:$%.2f\n",
@@ -69,7 +70,7 @@ public class UserInterface {
 
         }
         System.out.println("Here is your current order(s) of Chips");
-        for (Chips chips: chipOrder) {
+        for (Chips chips : chipOrder) {
             totalPrice += chips.getPrice();
             Order order = new Order(chips, chips.getPrice());
             System.out.printf("\"Chip:%-3s       Price:$%.2f\n",
@@ -80,13 +81,13 @@ public class UserInterface {
         System.out.println("Would you like to checkout? (Y/N)");
         String userCheckout = scanner.nextLine().trim();
 
-        if (userCheckout.equalsIgnoreCase("Y")){
+        if (userCheckout.equalsIgnoreCase("Y")) {
             Receipt.saveOrder();
             System.out.println("You have been checked out!");
         } else {
             System.out.println("Would you like to remove all items from your order? (Y/N)");
             String userDeleteOrder = scanner.nextLine().trim();
-            if (userDeleteOrder.equalsIgnoreCase("Y")){
+            if (userDeleteOrder.equalsIgnoreCase("Y")) {
                 sandwiches.clear();
                 drinkOrders.clear();
                 chipOrder.clear();
@@ -97,21 +98,22 @@ public class UserInterface {
         }
 
     }
-    public void processMakeSandwich(){
+
+    public void processMakeSandwich() {
         String size = chooseSize();
         String bread = chooseBread();
         String meat = chooseMeat();
         boolean extraMeat = false;
 
         // handles if user chooses no meat
-        if (!meat.equalsIgnoreCase("NO meat")){
+        if (!meat.equalsIgnoreCase("NO meat")) {
             extraMeat = chooseExtraMeat(); // method runs when they choose a meat
         }
         String cheese = chooseCheese();
         boolean extraCheese = false;
 
         // handles if user chooses no cheese
-        if (!cheese.equalsIgnoreCase("NO Cheese")){
+        if (!cheese.equalsIgnoreCase("NO Cheese")) {
             extraCheese = chooseExtraCheese(); // method runs when they choose a cheese
         }
         boolean toasted = chooseToast();
@@ -130,35 +132,37 @@ public class UserInterface {
         System.out.println("Price: " + sandwich.getTotal());
 
     }
-    public void processSignatures(){
+
+    public void processSignatures() {
         boolean leaveMenu = false;
         while (!leaveMenu) {
-        System.out.println("Would you like to: ");
-        System.out.println("1. Order a BLT");
-        System.out.println("2. Order a Philly Cheese Steak");
-        System.out.println("3. Go back to main menu");
-        int signatureOption = scanner.nextInt();
-        scanner.nextLine();
+            System.out.println("Would you like to: ");
+            System.out.println("1. Order a BLT");
+            System.out.println("2. Order a Philly Cheese Steak");
+            System.out.println("3. Go back to main menu");
+            int signatureOption = scanner.nextInt();
+            scanner.nextLine();
 
-        switch (signatureOption) {
-            case 1:
-                bltSignature();
-                break;
-            case 2:
-                phillySignature();
-                break;
-            case 3:
-                System.out.println("Going to the main menu");
-                leaveMenu = true;
-                break;
-            default:
-                System.out.println("Returning to main menu...");
-                leaveMenu = true;
-                break;
-        }
+            switch (signatureOption) {
+                case 1:
+                    bltSignature();
+                    break;
+                case 2:
+                    phillySignature();
+                    break;
+                case 3:
+                    System.out.println("Going to the main menu");
+                    leaveMenu = true;
+                    break;
+                default:
+                    System.out.println("Returning to main menu...");
+                    leaveMenu = true;
+                    break;
+            }
         }
 
     }
+
     public static BLT bltSignature() {
         System.out.println("Would you like to try one of our signature BLT's?(Y/N)");
         String signatureOption = scanner.nextLine();
@@ -170,6 +174,7 @@ public class UserInterface {
         }
         return newBLT;
     }
+
     public static PhillyCheeseSteak phillySignature() {
         System.out.println("Would you like to try one of our signature Philly Cheese Steak's?(Y/N)");
         String signatureOption = scanner.nextLine();
@@ -181,7 +186,8 @@ public class UserInterface {
         }
         return newPhilly;
     }
-    public static String chooseSize(){
+
+    public static String chooseSize() {
         boolean validSize = false;
         String customerSize = "";
         Sandwich.printSize();
@@ -204,7 +210,8 @@ public class UserInterface {
         }
         return customerSize;
     }
-    public static String chooseBread(){
+
+    public static String chooseBread() {
         boolean validBread = false;
         String customerBread = "";
         Sandwich.printBreads();
@@ -227,7 +234,8 @@ public class UserInterface {
         }
         return customerBread;
     }
-    public static String chooseMeat(){
+
+    public static String chooseMeat() {
         boolean validMeat = false;
         String customerMeat = "";
         Sandwich.printMeats();
@@ -250,6 +258,7 @@ public class UserInterface {
         }
         return customerMeat;
     }
+
     public static boolean chooseExtraMeat() {
         System.out.println("Would you like extra meat? (Y/N)");
         boolean extraMeat = false;
@@ -277,7 +286,7 @@ public class UserInterface {
         return extraMeat;
     }
 
-    public static String chooseCheese(){
+    public static String chooseCheese() {
         boolean validCheese = false;
         String customerCheese = "";
         Sandwich.printCheeses();
@@ -300,6 +309,7 @@ public class UserInterface {
         }
         return customerCheese;
     }
+
     public static boolean chooseExtraCheese() {
         System.out.println("Would you like extra Cheese? (Y/N)");
         boolean extraCheese = false;
@@ -326,6 +336,7 @@ public class UserInterface {
         }
         return extraCheese;
     }
+
     public static boolean chooseToast() {
         System.out.println("Would you like your sandwich toasted? (Y/N)");
         boolean toasted = false;
@@ -344,6 +355,7 @@ public class UserInterface {
         }
         return toasted;
     }
+
     public static ArrayList<String> chooseToppings() {
         ArrayList<String> selectedToppings = new ArrayList<>();
         boolean addMoreToppings = true;
@@ -375,7 +387,8 @@ public class UserInterface {
         }
         return selectedToppings;
     }
-    public static String chooseSauce(){
+
+    public static String chooseSauce() {
         boolean validSauce = false;
         String customerSauce = "";
         Sandwich.printSauces();
@@ -398,7 +411,8 @@ public class UserInterface {
         }
         return customerSauce;
     }
-    public static String chooseSides(){
+
+    public static String chooseSides() {
         boolean validSides = false;
         String customerSide = "";
         Sandwich.printSides();
@@ -421,7 +435,8 @@ public class UserInterface {
         }
         return customerSide;
     }
-    public void processOrderDrink(){
+
+    public void processOrderDrink() {
         String drinkName = orderDrink();
         String drinkSize = orderDrinkSize();
         Drink drink = new Drink(drinkName, drinkSize, 0.00f);
@@ -432,7 +447,7 @@ public class UserInterface {
 
     }
 
-    public static String orderDrink(){
+    public static String orderDrink() {
         boolean validDrink = false;
         String customerDrink = "";
         Drink.printDrinks();
@@ -455,7 +470,8 @@ public class UserInterface {
         }
         return customerDrink;
     }
-    public static String orderDrinkSize(){
+
+    public static String orderDrinkSize() {
         System.out.println("What size drink would you like? ");
         boolean validSize = false;
         String customerSize = "";
@@ -479,13 +495,15 @@ public class UserInterface {
         }
         return customerSize;
     }
-    public void processOrderChip(){
+
+    public void processOrderChip() {
         String chipName = userChip();
         Chips chip = new Chips(chipName);
         chipOrder.add(chip);
         System.out.println("Chip ordered: " + chip);
     }
-    public static String userChip(){
+
+    public static String userChip() {
         boolean validChip = false;
         String customerChip = "";
         Chips.printChips();
@@ -508,7 +526,6 @@ public class UserInterface {
         }
         return customerChip;
     }
-
 
 
 }
