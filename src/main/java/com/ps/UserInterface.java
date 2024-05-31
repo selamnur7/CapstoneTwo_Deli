@@ -1,9 +1,12 @@
 package com.ps;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.ps.Chips.chipOrder;
+import static com.ps.Drink.drinkOrders;
 import static com.ps.Sandwich.sandwiches;
 
 public class UserInterface {
@@ -11,10 +14,10 @@ public class UserInterface {
 
     public void display(){
         int mainMenuCommand;
-        System.out.println("Welcome to Selam's Sandwiches!");
+        System.out.println("Welcome to Selam's Super Sandwiches!");
         do {
             System.out.println("What would you like to purchase?");
-            System.out.println("1 for Sandwich, 2 for drink, 3 for chips, or 4 to review order, or 5 to exit:");
+            System.out.println("1 for Sandwich, 2 for drink, 3 for chips, 4 to review order, 5 to Choose one of our signature sandwiches, or 0 to exit:");
 
             mainMenuCommand = scanner.nextInt();
             scanner.nextLine();
@@ -33,22 +36,66 @@ public class UserInterface {
                     processCheckout();
                     break;
                 case 5:
+                    processSignatures();
+                    break;
+                case 0:
                     break;
 
             }
-        } while (mainMenuCommand != 5);
+        } while (mainMenuCommand != 0);
     }
     public void processCheckout(){
+        float totalPrice = 0.00f;
 
-        System.out.println("Here is your current order of sandwiches");
+        System.out.println("Here is your current order(s) of sandwiches");
         for (Sandwich orderSandwich: sandwiches) {
+            totalPrice += orderSandwich.getPrice();
         Order order = new Order(orderSandwich, orderSandwich.getPrice());
-            System.out.printf("\"Size:%-7s       Bread:%-7s       Meat:%-7s       Extra Meat:%-7b       Cheese:%-7s" +
-                    "       Extra Cheese:%-7b       Toasted:%-7b       Toppings:%-7s       Sauces:%-7s       Sides:%-7s       Price:$%.2f\n",
+            System.out.printf("\"Size:%-3s       Bread:%-3s       Meat:%-3s       Extra Meat:%-3b       Cheese:%-3s" +
+                    "       Extra Cheese:%-3b       Toasted:%-3b       Toppings:%-3s       Sauces:%-3s       Sides:%-3s       Price:$%.2f\n",
                     orderSandwich.getSize(), orderSandwich.getBread(), orderSandwich.getMeats(), orderSandwich.isExtraMeat(),
                     orderSandwich.getCheese(), orderSandwich.isExtraCheese(), orderSandwich.isToasted(), String.join(", ", orderSandwich.getToppings()),
                     orderSandwich.getSauces(), orderSandwich.getSides(), orderSandwich.getPrice());
         }
+
+        System.out.println("Here is your current order(s) of Drinks");
+        for (Drink drink: drinkOrders) {
+            totalPrice += drink.getPrice();
+            Order order = new Order(drink, drink.getPrice());
+            System.out.printf("\"Drink Size:%-3s       Drink:%-3s       Price:$%.2f\n",
+                    drink.getDrinkSize(),
+                    drink.getDrinkName(),
+                    drink.getPrice());
+
+        }
+        System.out.println("Here is your current order(s) of Chips");
+        for (Chips chips: chipOrder) {
+            totalPrice += chips.getPrice();
+            Order order = new Order(chips, chips.getPrice());
+            System.out.printf("\"Chip:%-3s       Price:$%.2f\n",
+                    chips.getChipName(),
+                    chips.getPrice());
+        }
+        System.out.println("Your total is: " + totalPrice);
+        System.out.println("Would you like to checkout? (Y/N)");
+        String userCheckout = scanner.nextLine().trim();
+
+        if (userCheckout.equalsIgnoreCase("Y")){
+            Receipt.saveOrder();
+            System.out.println("You have been checked out!");
+        } else {
+            System.out.println("Would you like to remove all items from your order? (Y/N)");
+            String userDeleteOrder = scanner.nextLine().trim();
+            if (userDeleteOrder.equalsIgnoreCase("Y")){
+                sandwiches.clear();
+                drinkOrders.clear();
+                chipOrder.clear();
+                System.out.println("All items removed. Back to main menu");
+            } else {
+                System.out.println("Back to main menu");
+            }
+        }
+
     }
     public void processMakeSandwich(){
         String size = chooseSize();
@@ -82,6 +129,57 @@ public class UserInterface {
         System.out.println("Sandwich ordered: " + sandwich);
         System.out.println("Price: " + sandwich.getTotal());
 
+    }
+    public void processSignatures(){
+        boolean leaveMenu = false;
+        while (!leaveMenu) {
+        System.out.println("Would you like to: ");
+        System.out.println("1. Order a BLT");
+        System.out.println("2. Order a Philly Cheese Steak");
+        System.out.println("3. Go back to main menu");
+        int signatureOption = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (signatureOption) {
+            case 1:
+                bltSignature();
+                break;
+            case 2:
+                phillySignature();
+                break;
+            case 3:
+                System.out.println("Going to the main menu");
+                leaveMenu = true;
+                break;
+            default:
+                System.out.println("Returning to main menu...");
+                leaveMenu = true;
+                break;
+        }
+        }
+
+    }
+    public static BLT bltSignature() {
+        System.out.println("Would you like to try one of our signature BLT's?(Y/N)");
+        String signatureOption = scanner.nextLine();
+        BLT newBLT = null;
+        if (signatureOption.equalsIgnoreCase("Y")) {
+            newBLT = new BLT();
+            sandwiches.add(newBLT);
+            System.out.println("BLT Ordered!");
+        }
+        return newBLT;
+    }
+    public static PhillyCheeseSteak phillySignature() {
+        System.out.println("Would you like to try one of our signature Philly Cheese Steak's?(Y/N)");
+        String signatureOption = scanner.nextLine();
+        PhillyCheeseSteak newPhilly = null;
+        if (signatureOption.equalsIgnoreCase("Y")) {
+            newPhilly = new PhillyCheeseSteak();
+            sandwiches.add(newPhilly);
+            System.out.println("Philly Cheese Steak Ordered!");
+        }
+        return newPhilly;
     }
     public static String chooseSize(){
         boolean validSize = false;
@@ -326,8 +424,10 @@ public class UserInterface {
     public void processOrderDrink(){
         String drinkName = orderDrink();
         String drinkSize = orderDrinkSize();
-        Drink drink = new Drink(drinkName, drinkSize, 2.00f);
-        Drink.drinkOrders.add(drink);
+        Drink drink = new Drink(drinkName, drinkSize, 0.00f);
+        float price = drink.getTotal();
+        drink.setPrice(price);
+        drinkOrders.add(drink);
         System.out.println("Drink ordered: " + drink);
 
     }
@@ -382,7 +482,7 @@ public class UserInterface {
     public void processOrderChip(){
         String chipName = userChip();
         Chips chip = new Chips(chipName);
-        Chips.chipOrder.add(chip);
+        chipOrder.add(chip);
         System.out.println("Chip ordered: " + chip);
     }
     public static String userChip(){

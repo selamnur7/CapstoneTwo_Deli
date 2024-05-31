@@ -60,7 +60,7 @@ public class Sandwich implements Total{
         meatOptions.add("Roast Beef");
         meatOptions.add("Chicken");
         meatOptions.add("Bacon");
-        meatOptions.add("NO meat");
+        meatOptions.add("no meat");
         return meatOptions;
     }
     public static List<Float> populatingMeatPrices() {
@@ -89,7 +89,7 @@ public class Sandwich implements Total{
         cheeseOptions.add("Provolone");
         cheeseOptions.add("Cheddar");
         cheeseOptions.add("Swiss");
-        cheeseOptions.add("NO cheese");
+        cheeseOptions.add("no cheese");
         return cheeseOptions;
     }
     public static List<Float> populatingCheesePrices() {
@@ -299,27 +299,51 @@ public class Sandwich implements Total{
         switch (this.size.toLowerCase()) {
             case "4 inch":
                 basePrice = 5.50f;
+                if (!this.meats.equalsIgnoreCase("no meat")){
+                    basePrice += 1.00f;
+                    if (this.extraMeat){
+                        basePrice += 0.50f;
+                    }
+                }
+                if (!this.cheese.equalsIgnoreCase("no cheese")){
+                    basePrice += 0.75f;
+                    if (this.extraCheese){
+                        basePrice += 0.30f;
+                    }
+                }
                 break;
             case "8 inch":
                 basePrice = 7.00f;
+                if (!this.meats.equalsIgnoreCase("no meat")){
+                    basePrice += 2.00f;
+                    if (this.extraMeat){
+                        basePrice += 1.00f;
+                    }
+                }
+                if (!this.cheese.equalsIgnoreCase("no cheese")){
+                    basePrice += 1.50f;
+                    if (this.extraCheese){
+                        basePrice += 0.60f;
+                    }
+                }
                 break;
             case "12 inch":
                 basePrice = 8.50f;
+                if (!this.meats.equalsIgnoreCase("no meat")){
+                    basePrice += 3.00f;
+                    if (this.extraMeat){
+                        basePrice += 1.50f;
+                    }
+                }
+                if (!this.cheese.equalsIgnoreCase("no cheese")){
+                    basePrice += 2.25f;
+                    if (this.extraCheese){
+                        basePrice += 0.90f;
+                    }
+                }
                 break;
 
 
-        }
-        if (!this.meats.equalsIgnoreCase("NO meats")){
-            basePrice += 1.00f;
-            if (this.extraMeat){
-                basePrice += 1.50f;
-            }
-        }
-        if (!this.cheese.equalsIgnoreCase("NO cheese")){
-            basePrice += 0.75f;
-            if (this.extraCheese){
-                basePrice += 1.05f;
-            }
         }
 
         return basePrice;

@@ -29,6 +29,19 @@ public class Order {
         this.sandwich = sandwich;
         this.price = price;
     }
+    public Order(Drink drink, float price) {
+        this.drink = drink;
+        this.price = price;
+    }
+    public Order(Chips chips, float price) {
+        this.chips = chips;
+        this.price = price;
+    }
+    public Order(Drink drink, Chips chips, float price) {
+        this.drink = drink;
+        this.chips = chips;
+        this.price = price;
+    }
 
     @Override
     public String toString() {

@@ -25,9 +25,9 @@ public class Drink implements Total{
     }
     public static List<String> populatingDrinkSize() {
         ArrayList<String> drinkSizeOptions = new ArrayList<>();
-        drinkSizeOptions.add("4 inch");
-        drinkSizeOptions.add("8 inch");
-        drinkSizeOptions.add("12 inch");
+        drinkSizeOptions.add("Small");
+        drinkSizeOptions.add("Medium");
+        drinkSizeOptions.add("Large");
         return drinkSizeOptions;
     }
     public static void printSize(){
